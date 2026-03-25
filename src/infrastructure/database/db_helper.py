@@ -42,6 +42,6 @@ class DataBaseHelper:
         await session.close()
 
 db_helper = DataBaseHelper(
-    url = settings.db_url,
-    echo = settings.echo,
+    url = settings.db.url,
+    echo = settings.db.echo,
 )

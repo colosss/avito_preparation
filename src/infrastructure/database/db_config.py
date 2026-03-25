@@ -1,16 +1,21 @@
-from pathlib import Path
-from os import getenv
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import BaseModel
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-DB_PORT = getenv('DB_PORT', '5432')
-DB_HOST = getenv('DB_HOST', 'localhost')
-DB_USER = getenv('DB_USER', 'user')
-DB_PASSWORD = getenv('DB_PASSWORD', 'password')
-DB_NAME = getenv('DB_NAME', 'database')
+class DbSettings(BaseModel):
+    user: str = "user"
+    password: str = "password"
+    host: str = "localhost"
+    port: int = 5432
+    name: str = "database"
+    echo: bool = False
 
+    @property
+    def url(self)->str:
+        db_prefix="postgresql+asyncpg"
+        return f"{db_prefix}://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
 class Settings(BaseSettings):
-    db_prefix:str = "postrfresql+asyncpg"
-    db_url:str = f"{db_prefix}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    model_config = SettingsConfigDict(env_file=".env", env_nested_delimiter="_", case_sensitive=False)
+    db: DbSettings = DbSettings()
+    mode: str = "normal"
 
 settings = Settings()
