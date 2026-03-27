@@ -13,7 +13,7 @@ class Merch(Base):
     __tablename__ = "merch"
 
     name: Mapped[str] = mapped_column(String(100), unique=True)
-    price: Mapped[str] = mapped_column(Integer)
+    price: Mapped[int] = mapped_column(Integer)
 
 class CoinTransfer(Base):
     sender_id: Mapped[int] = mapped_column(ForeignKey("user.id"), index=True)

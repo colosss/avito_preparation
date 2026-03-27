@@ -10,6 +10,12 @@ from alembic import context
 
 from src.infrastructure.database.db_config import settings
 from src.infrastructure.database.base import Base
+from src.infrastructure.database.models import (
+    User,
+    Merch,
+    CoinTransfer,
+    Purchase,
+)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -28,7 +34,7 @@ target_metadata = Base.metadata
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+# target_metadata = None
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

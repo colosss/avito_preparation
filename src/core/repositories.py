@@ -25,7 +25,7 @@ class AbstractUserRepository(ABC):
     async def update_coins(self, user_id:int, amount: int)->None:
         pass
     
-class AbstractMerhRepository(ABC):
+class AbstractMerchRepository(ABC):
     
     @abstractmethod
     async def get_merch_by_name(self, name:str)->Optional[Merch]:
