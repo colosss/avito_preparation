@@ -7,6 +7,8 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.orm import sessionmaker
 from src.infrastructure.database.db_config import settings
+from src.infrastructure.database.repositories.merch import MerchRepository
+# from src.infrastructure.database.repositories.user import 
 # from src.infrastructure.database.repositories.merch import MerchRepository
 # from src.infrastructure.database.repositories.user import UserRepository
 
@@ -41,6 +43,10 @@ class DataBaseHelper:
         yield session
         await session.close()
 
+    async def get_merch_repo(self)->MerchRepository:
+        async with self.session_factory() as session:
+            yield MerchRepository(session=session)
+ 
 db_helper = DataBaseHelper(
     url = settings.db.url,
     echo = settings.db.echo,
